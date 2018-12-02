@@ -16,7 +16,7 @@ def characterMapForLine(line)
   characterMap
 end
 
-File.open("input.txt").each do |line|
+File.open("../input.txt").each do |line|
   characterMap = characterMapForLine(line)
   sawTwo = false
   sawThree = false
