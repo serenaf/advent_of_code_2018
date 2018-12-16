@@ -67,15 +67,14 @@ class FindGuardSleepingTime
     puts max_minute_per_guard[guard_with_max_time] * guard_with_max_time
   end
 
-  def extract_sleep_time(line)
-    time = /\[.*?\]/.match(line)[0]
-    guard_action = /(?<=\]).*$/.match(line)[0]
-    guard_no = /(?<=Guard #)(\w+)/.match(guard_action)
-    if guard_no != nil
-      guard = guard_no[0].to_i
-    end
+  def sleep_times_for_line(line)
+    time =  /\[.*?\]/.match(line)[0]
+    event = /(?<=\]).*$/.match(line)[0]
+    guard_number = /(?<=Guard #)(\w+)/.match(event)
+    guard = guard_number[0].to_i if guard_number !=nil
 
     ShiftRecord.new(time: time, event: parse_event(line), guard: guard )
+
   end
 
   def parse_event(line)
