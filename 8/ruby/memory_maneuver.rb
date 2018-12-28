@@ -9,6 +9,7 @@ class MemoryManeuver
     licence = input[0].split(" ")
     node = calculate_node_data(licence)
     puts calculate_result(node)
+    puts calculate_root_value(node)
   end
 
   def calculate_node_data(licence)
@@ -34,6 +35,15 @@ class MemoryManeuver
     sum += node.metadata_sum
   end
 
+  def calculate_root_value(node)
+    return node.metadata_sum if node.children.empty?
+    value = 0
+    node.metadata.each do |metadata|
+      next if node.children[metadata-1].nil?
+      value += calculate_root_value(node.children[metadata-1])
+    end
+    value
+  end
 
   c = MemoryManeuver.new
   c.calculate_metadata
